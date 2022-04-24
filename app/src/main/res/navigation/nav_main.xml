@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/initFragment">
+
+    <fragment android:id="@+id/initFragment"
+        android:name="ru.zatsoft.mynet.activity.InitFragment"
+        android:label="fragment_init"
+        tools:layout="@layout/fragment_init"
+        app:startDestination="@id/action_placeholder_to_signInFragment">
+        <action
+            android:id="@+id/action_placeholder_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_placeholder_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="ru.zatsoft.mynet.activity.SignUpFragment"
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_sign_up">
+    <action
+        android:id="@+id/action_placeholder_to_signInFragment"
+        app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="ru.zatsoft.mynet.activity.SignInFragment"
+        android:label="SignInFragment"
+        tools:layout="@layout/fragment_sign_in">
+     <action
+        android:id="@+id/action_placeholder_to_signUpFragment"
+        app:destination="@id/signUpFragment" />
+    </fragment>
+</navigation>

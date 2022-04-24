@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MyNet</string>
+    <string name="sign_in">sign</string>
+    <string name="sign_up">register</string>
+    <string name="sign_out">unsign</string>
+    <string name="signIn">signIn</string>
+    <string name="login">login</string>
+    <string name="password">password</string>
+    <string name="enter_login">enterLogin</string>
+    <string name="enter_name">enterName</string>
+    <string name="repeat_password">passRepeate</string>
+    <string name="signUp">signUp</string>
+    <string name="name">name</string>
+    <string name="authError">authError</string>
+    <string name="wrong_pass">wrong_pass</string>
+</resources>
