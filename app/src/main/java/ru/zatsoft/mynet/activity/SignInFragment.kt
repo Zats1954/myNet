@@ -40,7 +40,7 @@ class SignInFragment: Fragment() {
             if(viewModel.dataState.value == FeedState.Error){
                 Snackbar.make(binding.root , "${R.string.authError}", Snackbar.LENGTH_LONG).show()
             }
-            viewModel.loadPosts()
+//            viewModel.loadPosts()
             findNavController().navigateUp()
         }
 

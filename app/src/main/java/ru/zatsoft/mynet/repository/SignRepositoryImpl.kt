@@ -20,10 +20,12 @@ class SignRepositoryImpl() : SignRepository {
 
     override suspend fun autorization(login: String, pass: String): Token {
        try {
-           val response = SignApi.retrofitService.authentication(login,pass)
+           println("login $login pass $pass")
+           val response = SignApi.service.authentication(login,pass)
            if (!response.isSuccessful) {
                throw ApiError(response.code(), response.message())
            }
+           println("responseBody ${response.body()}")
            return response.body() ?: throw ApiError(response.code(), response.message())
        } catch (e: IOException) {
            throw NetworkError
@@ -34,7 +36,7 @@ class SignRepositoryImpl() : SignRepository {
 
     override suspend fun registration(login: String, pass: String, name:String): Token {
         try {
-            val response = SignApi.retrofitService.registration(login, pass, name)
+            val response = SignApi.service.registration(login, pass, name)
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }
