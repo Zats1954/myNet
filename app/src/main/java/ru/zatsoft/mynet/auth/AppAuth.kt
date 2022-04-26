@@ -54,6 +54,7 @@ class AppAuth private constructor(context: Context) {
         private var instance: AppAuth? = null
 
         fun getInstance(): AppAuth = synchronized(this) {
+            println("AppAuth -? ${this.instance?.authStateFlow?.value?.token}")
             instance ?: throw IllegalStateException(
                 "AppAuth is not initialized, you must call AppAuth.initializeApp(Context context) first."
             )
