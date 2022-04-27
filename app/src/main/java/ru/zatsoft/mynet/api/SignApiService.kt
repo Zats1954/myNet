@@ -53,14 +53,14 @@ interface SignApiService {
     fun getById(@Path("id") id: Long): Response<User>
 
     @FormUrlEncoded
-    @POST("/authentication/")
+    @POST("authentication/")
     suspend fun authentication(@Field("login") login: String,@Field("pass") pass: String): Response<Token>
 
     @DELETE("Users/{id}/likes")
     fun dislikeById(@Path("id") id: Long): Response<User>
 
     @FormUrlEncoded
-    @POST("/registration/")
+    @POST("registration/")
     suspend fun registration(@Path("login")login: String,  @Path("pass") pass: String, @Path("name") name: String): Response<Token>
 }
 

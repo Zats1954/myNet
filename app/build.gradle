@@ -54,6 +54,7 @@ dependencies {
     def room_version = "2.4.2"
     def retrofit_version = "2.9.0"
     def retrofitgson_version = "2.9.0"
+    def okhttp_version = "4.9.0"
     def okhttploggin_version = "4.9.0"
     def coroutines_version = "1.4.3"
 
@@ -73,9 +74,11 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttploggin_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitgson_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttploggin_version"
+
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
     testImplementation 'junit:junit:4.+'
