@@ -9,7 +9,9 @@ import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import ru.zatsoft.mynet.R
+import ru.zatsoft.mynet.activity.NewPostFragment.Companion.postArg
 import ru.zatsoft.mynet.auth.AppAuth
+import ru.zatsoft.mynet.dto.Post
 import ru.zatsoft.mynet.dto.Token
 import ru.zatsoft.mynet.viewmodel.AuthViewModel
 
@@ -17,18 +19,33 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val viewModel: AuthViewModel by viewModels()
     private var myToken: Token? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         intent?.let {
             if (it.action != Intent.ACTION_SEND) {
                 return@let
-            }}
+            }
+            val post = it.getParcelableExtra<Post>(Intent.EXTRA_TEXT)
+            if (post?.content?.isNotBlank() != true) {
+                return@let
+            }
+
+            intent.removeExtra(Intent.EXTRA_TEXT)
+            findNavController(R.id.nav_host_fragment)
+                .navigate(
+                    R.id.action_placeholder_to_newPostFragment,
+                    Bundle().apply {
+                        postArg = post
+                    }
+                )
+
+        }
         viewModel.data.observe(this){
             invalidateOptionsMenu()
         }
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
 

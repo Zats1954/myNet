@@ -4,12 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import ru.zatsoft.mynet.dao.SignDao
-import ru.zatsoft.mynet.entity.UserEntity
+import ru.zatsoft.mynet.dao.PostDao
+import ru.zatsoft.mynet.entity.PostEntity
 
-@Database(entities = [UserEntity::class], version = 1)
+
+@Database(entities = [PostEntity::class], version = 1)
 abstract class Db : RoomDatabase() {
-    abstract fun signDao(): SignDao
+    abstract fun postDao(): PostDao
 
     companion object {
         @Volatile

@@ -1,21 +1,19 @@
 package ru.zatsoft.mynet.api
 
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.*
 import retrofit2.create
+import retrofit2.http.*
 import ru.zatsoft.mynet.BuildConfig
 import ru.zatsoft.mynet.BuildConfig.BASE_URL
 import ru.zatsoft.mynet.auth.AppAuth
-import ru.zatsoft.mynet.dto.Token
-import ru.zatsoft.mynet.dto.User
+import ru.zatsoft.mynet.dto.Media
+import ru.zatsoft.mynet.dto.Post
 import java.util.concurrent.TimeUnit
-
-
-// private const val BASE_URL = "${BuildConfig.BASE_URL}"
 
 private val logging = HttpLoggingInterceptor().apply {
     if (BuildConfig.DEBUG) {
@@ -39,33 +37,35 @@ private var okhttp = OkHttpClient.Builder()
     .connectTimeout(30, TimeUnit.SECONDS)
     .build()
 
-
-
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
     .baseUrl(BASE_URL)
     .client(okhttp)
     .build()
 
-interface SignApiService {
-    @GET("users/")
-    fun getAll(): Response<List<User>>
+interface PostsApiService {
 
-    @GET("users//{id}")
-    fun getById(@Path("id") id: Long): Response<User>
+    @GET("posts")
+    suspend fun getAll():  List<Post>
 
-    @FormUrlEncoded
-    @POST("users/authentication/")
-    suspend fun authentication(@Field("login") login: String,@Field("pass") pass: String): Response<Token>
+    @GET("posts/{id}/newer")
+    suspend fun getNewer(@Path("id") id: Long):List<Post>
 
-    @DELETE(" users/Users/{id}/likes")
-    fun dislikeById(@Path("id") id: Long): Response<User>
+    @POST("posts")
+    suspend fun save(@Body post: Post): Post
 
-    @FormUrlEncoded
-    @POST("users/registration/")
-    suspend fun registration(@Field("login")login: String,  @Field("pass") pass: String, @Field("name") name: String): Response<Token>
+    @DELETE("posts/{id}")
+    suspend fun removeById(@Path("id") id: Long)
+
+    @POST("posts/{id}/likes")
+    suspend fun likeById(@Path("id") id: Long): Post
+
+    @Multipart
+    @POST("media")
+    suspend fun upload(@Part media: MultipartBody.Part): Response<Media>
+
 }
 
-object SignApi {
-    val service: SignApiService by lazy  (retrofit::create)
+object PostsApi {
+    val service: PostsApiService by lazy( retrofit::create )
 }

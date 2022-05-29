@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_placeholder_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_placeholder_to_newPostFragment"
+            app:destination="@id/newPostFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -34,5 +37,15 @@
      <action
         android:id="@+id/action_placeholder_to_signUpFragment"
         app:destination="@id/signUpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/newPostFragment"
+        android:name="ru.zatsoft.mynet.activity.NewPostFragment"
+        android:label="SignInFragment"
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/action_placeholder_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
     </fragment>
 </navigation>

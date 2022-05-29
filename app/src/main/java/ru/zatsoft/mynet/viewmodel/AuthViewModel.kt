@@ -7,11 +7,15 @@ import kotlinx.coroutines.launch
 import ru.zatsoft.mynet.model.FeedState
 import ru.zatsoft.mynet.auth.AppAuth
 import ru.zatsoft.mynet.auth.AuthState
+import ru.zatsoft.mynet.db.Db
+import ru.zatsoft.mynet.repository.PostRepository
+import ru.zatsoft.mynet.repository.PostRepositoryImpl
 import ru.zatsoft.mynet.repository.SignRepositoryImpl
 import ru.zatsoft.mynet.repository.SignRepository
 import ru.zatsoft.mynet.util.SingleLiveEvent
 
 class AuthViewModel(application: Application): AndroidViewModel(application) {
+
 
     val data: LiveData<AuthState> = AppAuth.getInstance()
         .authStateFlow
@@ -21,13 +25,16 @@ class AuthViewModel(application: Application): AndroidViewModel(application) {
     val dataState: LiveData<FeedState>
         get() = _dataState
 
+    private val repository: PostRepository =
+        PostRepositoryImpl(Db.getInstance(application).postDao())
+
     private val _authCreated = SingleLiveEvent<Unit>()
     val authCreated: LiveData<Unit>
         get() = _authCreated
 
     private var errorMessage: String = ""
 
-    private val repository: SignRepository =
+    private val userAuthority: SignRepository =
         SignRepositoryImpl()
 
     val authenticated: Boolean
@@ -37,7 +44,7 @@ class AuthViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch {
             _dataState.value = FeedState.Loading
             try {
-                repository.autorization(login, pass).let{
+                userAuthority.autorization(login, pass).let{
                     println("Token $it")
                     AppAuth.getInstance().setAuth(it.id, it.token)}
                 _dataState.value = FeedState.Success
@@ -60,20 +67,30 @@ class AuthViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun save() {
-        println("saved")
-
+         println("saved")
+        _authCreated.value = Unit
     }
 
     fun loadPosts() {
-        TODO("Not yet implemented")
-    }
-
-    fun signUp(login: String, pass: String,name: String) {
-        println("login ${login}, pass ${pass} ,name ${name}")
         viewModelScope.launch {
             _dataState.value = FeedState.Loading
             try {
-                repository.registration (login, pass, name).let{
+
+                repository.getAll()
+                _dataState.value = FeedState.Success
+            } catch (e: Exception) {
+                myError(e)
+                _dataState.value = FeedState.Error
+            }
+        }
+    }
+
+    fun signUp(login: String, pass: String,name: String) {
+        println("login $login, pass $pass ,name $name")
+        viewModelScope.launch {
+            _dataState.value = FeedState.Loading
+            try {
+                userAuthority.registration (login, pass, name).let{
                     AppAuth.getInstance().setAuth(it.id, it.token)}
                 _dataState.value = FeedState.Success
             } catch (e: Exception) {
