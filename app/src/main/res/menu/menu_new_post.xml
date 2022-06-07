@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/linkM"
+        android:icon="@drawable/ic_link_24dp"
+        android:title="@string/description_select_link"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/photoM"
         android:icon="@drawable/ic_photo_24dp"
         android:title="@string/description_select_photo"
@@ -10,6 +15,11 @@
         android:id="@+id/cameraM"
         android:icon="@drawable/ic_camera_24dp"
         android:title="@string/description_take_photo"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/voiceM"
+        android:icon="@drawable/ic_voice_24dp"
+        android:title="@string/description_take_voice"
         app:showAsAction="always" />
     <item
         android:id="@+id/save"

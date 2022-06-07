@@ -26,4 +26,12 @@
     <string name="description_select_photo">select photo</string>
     <string name="description_take_photo">take photo</string>
     <string name="menu_save">save</string>
+    <string name="description_select_link">link</string>
+    <string name="description_take_voice">take voice</string>
+    <string name="post_author_avatar">Post author avatar</string>
+    <string name="postimage">postImage</string>
+    <string name="like">Like</string>
+    <string name="share">Share</string>
+    <string name="pwsHide">********</string>
+    <string name="ok">OK</string>
 </resources>

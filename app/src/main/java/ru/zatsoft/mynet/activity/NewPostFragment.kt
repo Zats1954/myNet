@@ -100,16 +100,8 @@ class NewPostFragment: Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.save -> {
-                fragmentBinding?.let {
-                    arguments?.getParcelable<Post>("post")?.let{post ->
-                        viewModel.changePost(post.copy(content = it.edit.text.toString()))
-                    }
-                    viewModel.save()
-                    AndroidUtils.hideKeyboard(requireView())
-                }
-                true
-            }
+
+            R.id.linkM -> {true}
             R.id.photoM -> {
                 ImagePicker.with(this)
                     .crop()
@@ -130,6 +122,17 @@ class NewPostFragment: Fragment() {
                     .cameraOnly()
                     .maxResultSize(1080, 1080)
                     .start(cameraRequestCode)
+                true
+            }
+            R.id.voiceM -> {true}
+            R.id.save -> {
+                fragmentBinding?.let {
+                    arguments?.getParcelable<Post>("post")?.let{post ->
+                        viewModel.changePost(post.copy(content = it.edit.text.toString()))
+                    }
+                    viewModel.save()
+                    AndroidUtils.hideKeyboard(requireView())
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)

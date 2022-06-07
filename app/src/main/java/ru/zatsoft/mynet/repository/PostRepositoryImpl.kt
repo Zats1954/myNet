@@ -68,7 +68,7 @@ class PostRepositoryImpl(private val dao: PostDao):PostRepository {
     override suspend fun saveWithAttachment(post: Post, upload: MediaUpload) {
         try {
             val media = upload(upload)
-            val postWithAttachment = post.copy(attachment = Attachment(media.id, AttachmentType.IMAGE))
+            val postWithAttachment = post.copy(attachment = Attachment(media.url, AttachmentType.IMAGE))
             save(postWithAttachment)
         } catch (e: ApiError) {
             throw e
@@ -85,11 +85,12 @@ class PostRepositoryImpl(private val dao: PostDao):PostRepository {
                 "file", upload.file.name, upload.file.asRequestBody())
 
             val response = PostsApi.service.upload(media)
+
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }
-
-            return response.body() ?: throw ApiError(response.code(), response.message())
+              println("************** ${response.body()}")
+            return response.body()?: throw ApiError(response.code(), response.message())
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {

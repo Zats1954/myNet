@@ -47,7 +47,7 @@ class PostViewHolder(
             post.attachment?.let{
                 imageView.isVisible = true
                 Glide.with(imageView)
-                    .load(BuildConfig.BASE_URL  + "/media/" + post.attachment.url )
+                    .load(post.attachment.url )
                     .placeholder(R.drawable.ic_camera_24dp)
                     .error(R.drawable.ic_error_100dp)
                     .override(300,200)
