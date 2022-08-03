@@ -47,8 +47,8 @@ class PostRepositoryImpl(private val dao: PostDao):PostRepository {
         }
     }
 
-    override suspend fun save(post: Post) {
-        PostsApi.service.save(post)
+    override suspend fun save(post: Post):Post {
+        return PostsApi.service.save(post)
     }
 
     override suspend fun likeById(id: Long) {
@@ -67,6 +67,7 @@ class PostRepositoryImpl(private val dao: PostDao):PostRepository {
 
     override suspend fun saveWithAttachment(post: Post, upload: MediaUpload) {
         try {
+
             val media = upload(upload)
             val postWithAttachment = post.copy(attachment = Attachment(media.url, AttachmentType.IMAGE))
             save(postWithAttachment)
@@ -89,11 +90,11 @@ class PostRepositoryImpl(private val dao: PostDao):PostRepository {
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }
-              println("************** ${response.body()}")
             return response.body()?: throw ApiError(response.code(), response.message())
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
+            print(" exception $e")
             throw UnknownError
         }
     }

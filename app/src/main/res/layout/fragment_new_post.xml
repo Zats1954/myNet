@@ -8,31 +8,31 @@
     android:layout_height="match_parent"
     tools:context=".activity.NewPostFragment" >
 
-        <FrameLayout
-            android:id="@+id/photoContainer"
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/photoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/textField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/textField"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" >
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/description_photo" />
 
-           <ImageView
-                android:id="@+id/photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="@string/description_photo" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/removePhoto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="60dp"
-                android:layout_gravity="center_horizontal|bottom"
-                android:gravity="bottom"
-                android:text="@string/remove" />
-        </FrameLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/removePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="60dp"
+            android:text="@string/remove" />
+    </LinearLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/textField"

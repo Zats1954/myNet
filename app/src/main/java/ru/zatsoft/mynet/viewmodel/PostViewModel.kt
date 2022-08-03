@@ -73,6 +73,8 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
     val photo: LiveData<PhotoModel>
         get() = _photo
 
+    var countNewPosts: Int = 0
+
     val newer: LiveData<Int> = repository.data.flatMapLatest {
         val lastId = it.firstOrNull()?.id ?: 0L
         val newPosts = repository.getNewerCount(lastId)
@@ -84,7 +86,7 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
     val edited = MutableLiveData(empty)
     var posts: Flow<FeedModel> = repository.data.map(::FeedModel)
     var errorMessage: String = ""
-    var countNewPosts: Int = 0
+
 
     init {
         loadPosts()
@@ -113,7 +115,11 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
                     when (_photo.value) {
                         noPhoto -> repository.save(it)
                         else -> _photo.value?.file?.let { file ->
-                            repository.saveWithAttachment(it, MediaUpload(file))
+//     is uploaded yet?
+                            if(!file.toString().startsWith("https:",true)){
+                                repository.saveWithAttachment(it, MediaUpload(file))}
+                            else
+                                repository.save(it)
                         }
                     }
                     _dataState.value = FeedState.Success

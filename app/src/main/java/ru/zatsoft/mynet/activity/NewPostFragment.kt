@@ -8,6 +8,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.snackbar.Snackbar
 import ru.zatsoft.mynet.BuildConfig
@@ -53,8 +54,7 @@ class NewPostFragment: Fragment() {
             if(post.id !=0L){
                 binding.edit.setText(post.content)
                 post.attachment?.let{
-                    val imagePath = "${BuildConfig.BASE_URL}/media/${post.attachment.url}"
-                    viewModel.changePhoto(Uri.parse(imagePath), File(imagePath))
+                    viewModel.changePhoto(Uri.parse(it.url), File(it.url))
                 } ?: viewModel.changePhoto(null,null)
             }
         }
@@ -88,7 +88,13 @@ class NewPostFragment: Fragment() {
                 return@observe
             }
             binding.photoContainer.visibility = View.VISIBLE
-            binding.photo.setImageURI(it.uri)
+            Glide.with(binding.photo)
+                .load(it.uri)
+                .placeholder(R.drawable.ic_camera_24dp)
+                .error(R.drawable.ic_error_100dp)
+                .override(300,200)
+                .timeout(10_000)
+                .into(binding.photo)
 
         }
         return binding.root

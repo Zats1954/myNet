@@ -17,9 +17,7 @@ class SignRepositoryImpl() : SignRepository {
 
     override suspend fun autorization(login: String, pass: String): Token {
        try {
-           println("login $login pass $pass")
            val response = SignApi.service.authentication(login,pass)
-           println("response ${response}")
            if (!response.isSuccessful) {
                throw ApiError(response.code(), response.message())
            }
