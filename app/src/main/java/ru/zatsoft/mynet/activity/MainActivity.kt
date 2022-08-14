@@ -10,6 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import ru.zatsoft.mynet.R
 import ru.zatsoft.mynet.activity.NewPostFragment.Companion.postArg
+import ru.zatsoft.mynet.api.TabAdapter
 import ru.zatsoft.mynet.auth.AppAuth
 import ru.zatsoft.mynet.dto.Post
 import ru.zatsoft.mynet.dto.Token
@@ -18,9 +19,13 @@ import ru.zatsoft.mynet.viewmodel.AuthViewModel
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val viewModel: AuthViewModel by viewModels()
     private var myToken: Token? = null
+    private lateinit var adapter: TabAdapter
+    private val tabNames: Array<String> = arrayOf("posts","events","jobs")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val fragmentAdapter = TabAdapter(supportFragmentManager)
 
         intent?.let {
             if (it.action != Intent.ACTION_SEND) {
