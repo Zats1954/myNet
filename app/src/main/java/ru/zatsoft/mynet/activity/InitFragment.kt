@@ -24,7 +24,9 @@ import ru.zatsoft.mynet.model.FeedState
 import ru.zatsoft.mynet.viewmodel.PostViewModel
 
 class InitFragment: Fragment() {
-    private val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
+    private val viewModel: PostViewModel by viewModels(
+//        ownerProducer = ::requireParentFragment
+    )
     private var myToken: Token? = null
 
     override fun onCreateView(
