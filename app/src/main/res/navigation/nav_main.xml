@@ -42,7 +42,7 @@
     <fragment
         android:id="@+id/newPostFragment"
         android:name="ru.zatsoft.mynet.activity.NewPostFragment"
-        android:label="SignInFragment"
+        android:label="SignPostFragment"
         tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_placeholder_to_signUpFragment"

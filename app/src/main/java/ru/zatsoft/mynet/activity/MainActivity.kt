@@ -5,18 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TableLayout
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
 import ru.zatsoft.mynet.R
+import ru.zatsoft.mynet.activity.NewPostFragment.Companion.postArg
 import ru.zatsoft.mynet.auth.AppAuth
 import ru.zatsoft.mynet.databinding.ActivityMainBinding
 import ru.zatsoft.mynet.dto.Post
 import ru.zatsoft.mynet.dto.Token
-import ru.zatsoft.mynet.tab.MyPagerAdapter
 import ru.zatsoft.mynet.viewmodel.AuthViewModel
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -24,15 +21,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private var myToken: Token? = null
     private lateinit var binding: ActivityMainBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        val viewPager: ViewPager = binding.viewPager
-        val  pagerAdapter =  MyPagerAdapter( supportFragmentManager)
-         viewPager.adapter =  pagerAdapter
-        val tabs : TabLayout = binding.tabs
-        tabs.setupWithViewPager(viewPager)
 
         intent?.let {
             if (it.action != Intent.ACTION_SEND) {
@@ -42,7 +33,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             if (post?.content?.isNotBlank() != true) {
                 return@let
             }
-
+            val fm = supportFragmentManager
             intent.removeExtra(Intent.EXTRA_TEXT)
 //            findNavController(R.id.nav_fragment)
 //                .navigate(
@@ -73,17 +64,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         return when(item.itemId){
             R.id.signin -> {
                 val token = bundleOf("token" to myToken)
-//                findNavController(R.id.nav_host_fragment)
-//                    .navigate(R.id.action_placeholder_to_signInFragment , token)
-//                myToken?.let{AppAuth.getInstance().setAuth(it.id, it.token)}
+                findNavController(R.id.nav_fragment)
+                    .navigate(R.id.action_placeholder_to_signInFragment , token)
+                myToken?.let{AppAuth.getInstance().setAuth(it.id, it.token)}
                 true
             }
             R.id.signup -> {
                 val tokenUp = Bundle()
                 tokenUp.putParcelable("token", myToken)
-//                findNavController(R.id.nav_host_fragment)
-//                    .navigate(R.id.action_placeholder_to_signUpFragment)
-//                myToken?.let{ AppAuth.getInstance().setAuth( it.id, it.token)}
+                findNavController(R.id.nav_fragment)
+                    .navigate(R.id.action_placeholder_to_signUpFragment)
+                myToken?.let{ AppAuth.getInstance().setAuth( it.id, it.token)}
                 true
             }
             R.id.signout -> {
